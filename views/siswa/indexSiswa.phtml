@@ -1,0 +1,111 @@
+<?php
+/*
+@var string $title,
+@var array $siswas,
+@var string $nis
+*/
+
+?>
+<html lang="en">
+<head>
+  <?php  include $_SERVER['DOCUMENT_ROOT'] . '/views/head.php'; ?>
+  <title><?=  $title; ?></title>
+  <!-- Custom styles for this template -->
+  <link href="static/css/app.css" rel="stylesheet">
+</head>
+
+<body>
+  <?php  include $_SERVER['DOCUMENT_ROOT'] . '/views/nav.php'; ?>
+  <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+	<h1 class="display-4"><?=  $title; ?></h1>
+	<p class="lead">Home page of application</p>
+</div>
+  <div id="spinner-div" class="pt-5">
+    <div class="spinner-border text-primary" role="status">
+    </div>
+  </div>
+  <div class="container">
+
+<div class="card-deck mb-3">
+  <div class="card mb-4 box-shadow">
+    <div class="card-header">
+      <h4 class="my-0 font-weight-normal">Data Siswa</h4>
+    </div>
+    <div class="card-body">
+      <div class="panel-body">
+        <?php if(isset($nis)): ?>
+        <form id="updateSiswa">  
+        <?php else: ?>
+        <form id="postSiswa">
+        <?php endif ?>
+          <label for="nis">NIS</label>
+          <div class="input-group mb-3 col-md-12">
+            <?php if(isset($nis)): ?>
+              <input name="nis" type="text" id="nis" value="<?php echo $nis; ?>" class="prima form-control" disabled/>
+            <?php else: ?>
+              <input name="nis" type="text" id="nis" class="prima form-control" required />
+            <?php endif ?>
+          </div>
+          <label for="name">Name</label>
+          <div class="input-group mb-3 col-md-12">
+            <input name="name" type="text" id="name" <?php if (isset($nis)){ echo 'value="'.$dataSiswa[0]->name.'"'; } ?> class="prima form-control" placeholder="Nama Lengkap" required />
+          </div>
+          <label for="address">Address</label>
+          <div class="input-group mb-3 col-md-12">
+            <input name="address" type="text" id="address" <?php if (isset($nis)){ echo 'value="'.$dataSiswa[0]->address.'"'; } ?> class="form-control" placeholder="Alamat Lengkap" required />
+          </div>
+          <label for="phone">Phone</label>
+          <div class="input-group mb-3 col-md-12">
+            <input type="text" name="phone" id="phone" <?php if (isset($nis)){ echo 'value="'.$dataSiswa[0]->phone.'"'; } ?> class="form-control" required />
+          </div>
+          <div class="input-group mb-3 col-md-2">
+            <button class="btn btn-primary btn-block">
+              <span>Simpan</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card-deck mb-3">
+  <div class="card mb-4 box-shadow">
+    <div class="card-header">
+      <h4 class="my-0 font-weight-normal">Data Kunci RSA</h4>
+    </div>
+    <div class="card-body">
+      <div class="panel-body table-responsive">
+        <table id="key" class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th>NIS</th>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Phone</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($siswas as $siswa): ?>
+              <tr>
+                <td><?php echo $siswa->nis ?></td>
+                <td><?php echo $siswa->name ?></td>
+                <td><?php echo $siswa->address ?></td>
+                <td><?php echo $siswa->phone ?></td>
+                <td><a href="/siswa?edit=<?php echo $siswa->nis ?>" >Edit</a> | <a href="#" class="KeyDelete" data-remote="ok">Delete</a></td>
+              </tr> 
+            <?php endforeach ?>           
+          </tbody>
+        </table>
+       </div>
+    </div>
+  </div>
+</div>
+
+<?php  include $_SERVER['DOCUMENT_ROOT'] . '/views/footer.php'; ?>
+
+<script type="text/javascript" src="/static/js/app.js"></script>
+
+</body>
+</html>
